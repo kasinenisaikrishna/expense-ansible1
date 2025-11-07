@@ -16,5 +16,3 @@
   - name: create expense user #idempotenency will be taken care by ansible we do not need to worry
     ansible.builtin.user:
       name: expense
-
-      
