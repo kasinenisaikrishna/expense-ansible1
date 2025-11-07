@@ -5,6 +5,11 @@
     mysql_root_password: ExpenseApp@1
     login_host: mysql.dawsconnect.org
   tasks:
+  - name: ansible to install PyMySQL 
+    ansible.builtin.pip: 
+      name:
+      - PyMySQL
+      executable: pip3.9 #version we will get it from ansible --versio
   - name: disable default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
 
