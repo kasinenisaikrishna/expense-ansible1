@@ -32,3 +32,9 @@
       src: /tmp/backend.zip #by default ansible thinks this is in ansible server but this file is in remote server where ansible is connecting to
       dest: /
       remote_src: yes
+
+  - name: install dependencies
+    ansible.builtin.command: npm install #before running this command ansible goes to /app dir and runs the command as npm install should run from location where we placed package.json
+    args:
+      chdir: /app 
+      
