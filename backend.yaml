@@ -16,3 +16,18 @@
   - name: create expense user #idempotenency will be taken care by ansible we do not need to worry
     ansible.builtin.user:
       name: expense
+
+  - name: create app directory
+    ansible.builtin.file: #we use this module to create directory but we need to mention explicitly as state: directory or else instead of directory file will be created
+      path: /app
+      state: directory 
+
+  - name: download the backend code
+    ansible.builtin.get_url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip
+
+  - name: extract the backend code
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip
+      dest: /app
