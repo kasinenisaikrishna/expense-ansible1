@@ -29,5 +29,6 @@
 
   - name: extract the backend code
     ansible.builtin.unarchive:
-      src: /tmp/backend.zip
-      dest: /app
+      src: /tmp/backend.zip #by default ansible thinks this is in ansible server but this file is in remote server where ansible is connecting to
+      dest: /
+      remote_src: yes
