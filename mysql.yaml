@@ -5,6 +5,11 @@
     mysql_root_password: ExpenseApp@1
     login_host: mysql.dawsconnect.org
   tasks:
+  - name: ansible to install PyMySQL #even we are using ansible to connect to mysql in the background python will be connecting as ansible is developed on top of python hence we need to install PyMySQL(which we got from error)
+    ansible.builtin.pip: #pip is the build tool to install python related things hence we use pip module
+      name:
+      - PyMySQL
+      executable: pip3.9 #version we will get it from ansible --version
   - name: install mysql server
     ansible.builtin.package:
       name: mysql-server
