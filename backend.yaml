@@ -10,13 +10,11 @@
       name:
       - PyMySQL
       - cryptography
-      executable: pip3.9 #version we will get it from ansible --version
+      executable: pip3.9 
   - name: disable default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
-
   - name: enable nodejs 20
     ansible.builtin.command: dnf module enable nodejs:20 -y
-
   - name: install nodejs
     ansible.builtin.package:
       name: "{{ item }}"
@@ -24,37 +22,30 @@
     loop:
     - nodejs
     - mysql
-
-  - name: create expense user #idempotenency will be taken care by ansible we do not need to worry
+  - name: create expense user
     ansible.builtin.user:
       name: expense
-
   - name: create app directory
-    ansible.builtin.file: #we use this module to create directory but we need to mention explicitly as state: directory or else instead of directory file will be created
+    ansible.builtin.file:
       path: /app
       state: directory 
-
   - name: download the backend code
     ansible.builtin.get_url:
       url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
       dest: /tmp/backend.zip
-
   - name: extract the backend code
     ansible.builtin.unarchive:
-      src: /tmp/backend.zip #by default ansible thinks this is in ansible server but this file is in remote server where ansible is connecting to
+      src: /tmp/backend.zip 
       dest: /app
       remote_src: yes
-
   - name: install dependencies
-    ansible.builtin.command: npm install #before running this command ansible goes to /app dir and runs the command as npm install should run from location where we placed package.json
+    ansible.builtin.command: npm install 
     args:
       chdir: /app 
-
   - name: copy backend service
     ansible.builtin.copy:
       src: backend.service
       dest: /etc/systemd/system/backend.service
-
   - name: import mysql data
     community.mysql.mysql_db:
       login_user: root
@@ -63,7 +54,6 @@
       target: /app/schema/backend.sql 
       name: all
       state: import
-
   - name: daemon reload
     ansible.builtin.systemd_service:
       daemon_reload: true
