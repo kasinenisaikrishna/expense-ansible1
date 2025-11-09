@@ -9,6 +9,7 @@
     ansible.builtin.pip: 
       name:
       - PyMySQL
+      - cryptography
       executable: pip3.9 #version we will get it from ansible --versio
   - name: disable default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
