@@ -5,7 +5,7 @@
     mysql_root_password: ExpenseApp@1
     login_host: mysql.dawsconnect.org
   tasks:
-  - name: ansible to install PyMySQL 
+  - name: ansible to install PyMySQL and cryptography
     ansible.builtin.pip: 
       name:
       - PyMySQL
