@@ -42,7 +42,7 @@
   - name: extract the backend code
     ansible.builtin.unarchive:
       src: /tmp/backend.zip #by default ansible thinks this is in ansible server but this file is in remote server where ansible is connecting to
-      dest: /
+      dest: /app
       remote_src: yes
 
   - name: install dependencies
